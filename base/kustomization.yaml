@@ -1,0 +1,24 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - deployment-api.yaml
+  - deployment-batch.yaml
+
+namespace: 4taku-direboar
+
+configMapGenerator:
+- name: database-config
+  literals:
+      - db-server-name=postgres-postgresql-hl.database-direboar
+      - db-server-port=5432
+      - db-name=4taku
+      - db-user-name=4taku-user
+generatorOptions:
+  disableNameSuffixHash: true
+
+secretGenerator:
+  - name : database-secrets
+    literals:
+      - "db-password=4taku-pass"
+#Hashの生成を有効にした場合、Serviceのmanifest側のconfig名にhashが設定されない事象が発生する。
+#これに対応するため、hashの生成を無効化する。

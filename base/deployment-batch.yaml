@@ -1,0 +1,105 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: 4taku-batch.get-minder-ranking
+spec:
+  schedule: "0 15 * * *" #0時に起動
+  # schedule: "* * * * *" #1分ごと
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: 4taku-batch-get-minder-ranking
+              image: minokuba/4taku-batch
+              imagePullPolicy: IfNotPresent #イメージをレジストリから取得済みの場合、再取得しない。
+              args:
+                - "get-minder-ranking"
+              env:
+                - name: db-server-name
+                  valueFrom:
+                    configMapKeyRef:
+                      key: db-server-name
+                      name: database-config
+                - name: db-server-port
+                  valueFrom:
+                    configMapKeyRef:
+                      key: db-server-port
+                      name: database-config
+                - name: db-name
+                  valueFrom:
+                    configMapKeyRef:
+                      key: db-name
+                      name: database-config
+                - name: db-username
+                  valueFrom:
+                    configMapKeyRef:
+                      key: db-user-name
+                      name: database-config
+                - name: db-password
+                  valueFrom:
+                    secretKeyRef:
+                      key: db-password
+                      name: database-secrets
+              resources:
+                #oktetoはpod毎の制限は見ているが、namespace毎の制限はチェックしていない模様
+                requests:
+                  memory: 2000Mi
+                  cpu: 1000m
+                limits:
+                  memory: 2000Mi
+                  cpu: 1000m
+          restartPolicy: OnFailure
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: 4taku-batch.update-hero
+spec:
+  schedule: "0 16 * * *" #1時に起動
+  # schedule: "* * * * *" #1分ごと
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: 4taku-batch-update-hero
+              image: minokuba/4taku-batch
+              imagePullPolicy: IfNotPresent #イメージをレジストリから取得済みの場合、再取得しない。
+              args:
+                - "update-hero"
+              env:
+                - name: db-server-name
+                  valueFrom:
+                    configMapKeyRef:
+                      key: db-server-name
+                      name: database-config
+                - name: db-server-port
+                  valueFrom:
+                    configMapKeyRef:
+                      key: db-server-port
+                      name: database-config
+                - name: db-name
+                  valueFrom:
+                    configMapKeyRef:
+                      key: db-name
+                      name: database-config
+                - name: db-username
+                  valueFrom:
+                    configMapKeyRef:
+                      key: db-user-name
+                      name: database-config
+                - name: db-password
+                  valueFrom:
+                    secretKeyRef:
+                      key: db-password
+                      name: database-secrets
+              resources:
+                #oktetoはpod毎の制限は見ているが、namespace毎の制限はチェックしていない模様
+                requests:
+                  memory: 2000Mi
+                  cpu: 1000m
+                limits:
+                  memory: 2000Mi
+                  cpu: 1000m
+          restartPolicy: OnFailure

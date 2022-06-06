@@ -1,0 +1,76 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: 4taku-api
+  namespace: 4taku-direboar
+spec:
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
+  replicas: 1
+  selector:
+    matchLabels:
+      app: 4taku-api
+  template:
+    metadata:
+      labels:
+        app: 4taku-api
+    spec:
+      containers:
+        - name: 4taku-api
+          image: minokuba/4taku-api
+          env:
+            - name: db-server-name
+              valueFrom:
+                configMapKeyRef:
+                  key: db-server-name
+                  name: database-config
+            - name: db-server-port
+              valueFrom:
+                configMapKeyRef:
+                  key: db-server-port
+                  name: database-config
+            - name: db-name
+              valueFrom:
+                configMapKeyRef:
+                  key: db-name
+                  name: database-config
+            - name: db-username
+              valueFrom:
+                configMapKeyRef:
+                  key: db-user-name
+                  name: database-config
+            - name: db-password
+              valueFrom:
+                secretKeyRef:
+                  key: db-password
+                  name: database-secrets
+          imagePullPolicy: IfNotPresent #イメージをレジストリから取得済みの場合、再取得しない。
+          resources:
+            #oktetoはpod毎の制限は見ているが、namespace毎の制限はチェックしていない模様
+            requests:
+              memory: 2000Mi
+              cpu: 1000m
+            limits:
+              memory: 2000Mi
+              cpu: 1000m
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-4taku-api
+  labels:
+    app: service-4taku-api
+  annotations:
+    dev.okteto.com/auto-ingress: "true"
+spec:
+  type: NodePort
+  ports:
+    - port: 8080
+      protocol: TCP
+      targetPort: 8080
+      nodePort: 30080
+  selector:
+    app: 4taku-api

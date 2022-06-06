@@ -1,0 +1,40 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../base
+namespace: 4taku-direboar
+
+#開発環境ではDBの設定が異なるので修正。
+configMapGenerator:
+  - name: database-config
+    behavior: merge
+    literals:
+      - db-server-name=postgres-postgresql-hl.database-direboar
+      - db-server-port=5432
+      - db-name=postgres
+      - db-user-name=postgres
+#configMapGeneratorでnameにHashを設定する仕様にした場合、Deployment側にHashが設定されない問題があるのでHashを設定しない仕様を選択している。
+generatorOptions:
+  disableNameSuffixHash: true
+
+#開発環境ではDBの設定が異なるので修正。
+secretGenerator:
+  - name: database-secrets
+    behavior: merge
+    literals:
+      - "db-password=changeme"
+
+#開発環境ではscheduleを1分ごと実行の設定にするため修正。
+patchesJson6902:
+  - path: ./patch-get-minder-ranking.yaml
+    target:
+      group: batch
+      version: v1
+      kind: CronJob
+      name: 4taku-batch.get-minder-ranking
+  - path: ./patch-update-hero.yaml
+    target:
+      group: batch
+      version: v1
+      kind: CronJob
+      name: 4taku-batch.update-hero
