@@ -1,0 +1,28 @@
+# file: .github/workflows/deploy-octeto-prod.yaml
+name: preview
+
+on:
+  push:
+    branches:
+      - main
+  # pull_request:
+  #   branches:
+  #     - main
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Context
+      uses: okteto/context@latest
+      with:
+        token: ${{ secrets.OKTETO_TOKEN }}
+
+    - name: "Trigger the pipeline"
+      uses: okteto/pipeline@latest
+      with:
+        name: 4taku-pipeline
+        timeout: 8m
+        skipIfExists: false # これにしておくとmanifestを再読込してくれる
+        namespace : 4taku-direboar
+    
