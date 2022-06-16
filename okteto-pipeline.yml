@@ -1,4 +1,0 @@
-deploy:
-  - kubectl apply -k overlays/prod
-  # - kubectl apply -f manifest
-  
