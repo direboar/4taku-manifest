@@ -21,10 +21,10 @@ jobs:
     - name: "Trigger the pipeline"
       uses: okteto/pipeline@latest
       with:
-        name: 4taku-pipeline
+        name: pipeline
         timeout: 8m
         skipIfExists: false # これにしておくとmanifestを再読込してくれる
         namespace : 4taku-direboar
-        file : .okteto/deploy-octeto-prod-pipeline.yml
+        # file : .okteto/deploy-octeto-prod-pipeline.yml
 
     
