@@ -25,4 +25,6 @@ jobs:
         timeout: 8m
         skipIfExists: false # これにしておくとmanifestを再読込してくれる
         namespace : 4taku-direboar
+        file : .okteto/deploy-octeto-prod-pipeline.yml
+
     
