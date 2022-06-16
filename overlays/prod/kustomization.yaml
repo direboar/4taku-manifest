@@ -5,7 +5,7 @@ resources:
 
 namespace: 4taku-direboar
 
-#replicationを設定
+#Set up replication
 replicas:
   - name: 4taku-api
     count: 2

@@ -3,8 +3,7 @@ kind: CronJob
 metadata:
   name: 4taku-batch.get-minder-ranking
 spec:
-  schedule: "0 15 * * *" #0時に起動
-  # schedule: "* * * * *" #1分ごと
+  schedule: "0 15 * * *" #Starts at 0:00
   jobTemplate:
     spec:
       template:
@@ -12,7 +11,7 @@ spec:
           containers:
             - name: 4taku-batch-get-minder-ranking
               image: minokuba/4taku-batch
-              imagePullPolicy: IfNotPresent #イメージをレジストリから取得済みの場合、再取得しない。
+              imagePullPolicy: IfNotPresent #If the image has already been retrieved from the registry, do not reacquire it.
               args:
                 - "get-minder-ranking"
               env:
@@ -42,7 +41,7 @@ spec:
                       key: db-password
                       name: database-secrets
               resources:
-                #oktetoはpod毎の制限は見ているが、namespace毎の制限はチェックしていない模様
+                #It appears that okteto sees per-pod limits, but does not check per-namespace limits.
                 requests:
                   memory: 2000Mi
                   cpu: 1000m
@@ -56,8 +55,7 @@ kind: CronJob
 metadata:
   name: 4taku-batch.update-hero
 spec:
-  schedule: "0 16 * * *" #1時に起動
-  # schedule: "* * * * *" #1分ごと
+  schedule: "0 16 * * *" #Starts at 1:00
   jobTemplate:
     spec:
       template:
@@ -65,7 +63,7 @@ spec:
           containers:
             - name: 4taku-batch-update-hero
               image: minokuba/4taku-batch
-              imagePullPolicy: IfNotPresent #イメージをレジストリから取得済みの場合、再取得しない。
+              imagePullPolicy: IfNotPresent #If the image has already been retrieved from the registry, do not reacquire it.
               args:
                 - "update-hero"
               env:
@@ -95,7 +93,7 @@ spec:
                       key: db-password
                       name: database-secrets
               resources:
-                #oktetoはpod毎の制限は見ているが、namespace毎の制限はチェックしていない模様
+                #It appears that okteto sees per-pod limits, but does not check per-namespace limits.
                 requests:
                   memory: 2000Mi
                   cpu: 1000m

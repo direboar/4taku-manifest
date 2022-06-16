@@ -1,4 +1,4 @@
 - op: replace
   path: /spec/schedule
-  # value: "* * * * *"
-  value: "0 15 * * *" #0時に起動
+  #Start at 0:00
+  value: "* * * * *"

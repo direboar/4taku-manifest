@@ -20,5 +20,4 @@ secretGenerator:
   - name : database-secrets
     literals:
       - "db-password=4taku-pass"
-#Hashの生成を有効にした場合、Serviceのmanifest側のconfig名にhashが設定されない事象が発生する。
-#これに対応するため、hashの生成を無効化する。
+#When hash generation is enabled, hash is not set in the config name on the manifest side of the service. To deal with this, disable the generation of hash.

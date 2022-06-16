@@ -47,9 +47,9 @@ spec:
                 secretKeyRef:
                   key: db-password
                   name: database-secrets
-          imagePullPolicy: IfNotPresent #イメージをレジストリから取得済みの場合、再取得しない。
+          imagePullPolicy: IfNotPresent #If the image has already been retrieved from the registry, do not reacquire it.
           resources:
-            #oktetoはpod毎の制限は見ているが、namespace毎の制限はチェックしていない模様
+            #It appears that okteto sees per-pod limits, but does not check per-namespace limits.
             requests:
               memory: 2000Mi
               cpu: 1000m

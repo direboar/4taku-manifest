@@ -4,7 +4,7 @@ resources:
   - ../../base
 namespace: 4taku-direboar
 
-#開発環境ではDBの設定が異なるので修正。
+#DB settings are different in the development environment, so fix.
 configMapGenerator:
   - name: database-config
     behavior: merge
@@ -13,18 +13,18 @@ configMapGenerator:
       - db-server-port=5432
       - db-name=postgres
       - db-user-name=postgres
-#configMapGeneratorでnameにHashを設定する仕様にした場合、Deployment側にHashが設定されない問題があるのでHashを設定しない仕様を選択している。
+#If configMapGenerator sets Hash to name, there is a problem that Hash is not set on the Deployment side, so we have chosen not to set Hash.
 generatorOptions:
   disableNameSuffixHash: true
 
-#開発環境ではDBの設定が異なるので修正。
+#DB settings are different in the development environment, so fix.
 secretGenerator:
   - name: database-secrets
     behavior: merge
     literals:
       - "db-password=changeme"
 
-#開発環境ではscheduleを1分ごと実行の設定にするため修正。
+#In the development environment, schedule is modified to be set to run every minute.
 patchesJson6902:
   - path: ./patch-get-minder-ranking.yaml
     target:
