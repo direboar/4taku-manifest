@@ -8,5 +8,4 @@ namespace: 4taku-direboar
 #Set up replication
 replicas:
   - name: 4taku-api
-    count: 1
-    # count: 2
+    count: 2
