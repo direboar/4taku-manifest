@@ -41,7 +41,7 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3.8.2
         with:
-          token: ${{ secrets.REPO_ACCESS_TOKEN }}
+          # token: ${{ secrets.REPO_ACCESS_TOKEN }}
           commit-message: "Update manifest"
           title: Update manifest ${{ github.event.client_payload.sha }}
           body: ""
