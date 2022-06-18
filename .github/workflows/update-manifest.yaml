@@ -3,6 +3,9 @@ name: update manifest
 on:
   repository_dispatch:
     types: [update-manifest]
+  push:
+    branches:
+      - main
 
 jobs:
   update-manifests:
@@ -19,7 +22,7 @@ jobs:
       - name: Install kustomize
         run: |
           sudo apt-get update && sudo apt-get install -y curl
-      #     curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash -s ${{ env.KUSTOMIZE_VERSION }}
+          curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash -s ${{ env.KUSTOMIZE_VERSION }}
       #     sudo mv ./kustomize /usr/local/bin/kustomize
 
       # # `kustomize edit set image`コマンドで、使用するイメージのタグを更新
