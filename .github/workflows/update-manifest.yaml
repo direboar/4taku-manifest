@@ -3,16 +3,11 @@ name: update manifest
 on:
   repository_dispatch:
     types: [update-manifest]
-  # push:
-  #   branches:
-  #     - main
 
 jobs:
   update-manifests:
     runs-on: ubuntu-18.04
     timeout-minutes: 300
-    env:
-      KUSTOMIZE_VERSION: 4.5.5
 
     steps:
       - name: Checkout manifest repository
@@ -37,7 +32,7 @@ jobs:
           /usr/local/bin/kustomize edit set image minokuba/4taku-batch=minokuba/4taku-batch:${{ github.event.client_payload.sha }}
           cd -
 
-      # 使用するイメージのタグを更新のPull Requestの作成
+      # 使用するイメージのタグを更新し、Pull Requestの作成
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3.8.2
         with:

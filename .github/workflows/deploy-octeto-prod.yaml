@@ -1,12 +1,6 @@
 # file: .github/workflows/deploy-octeto-prod.yaml
 name: deploy-octeto-prod
 
-# on:
-#   pull_request:
-#     branches:
-#       - master
-#     types:
-#       - closed
 on:
   pull_request:
     types:
@@ -22,6 +16,13 @@ jobs:
       with:
         token: ${{ secrets.OKTETO_TOKEN }}
 
+    # pullrequestブランチの内容をクラスタに反映するので要注意。
+    # okteto/pipelineはBranchを指定できないので、この挙動を変えるには、
+    # on:
+    #   push:
+    #     branches:
+    #       - main
+    # をトリガーに動かさないとだめそう。
     - name: "Trigger the pipeline"
       uses: okteto/pipeline@latest
       with:
