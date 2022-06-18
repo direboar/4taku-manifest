@@ -22,7 +22,7 @@ jobs:
       with:
         name: pr-${{ github.event.client_payload.sha }}-direboar
         timeout: 15m 
-        filename : ./okteto/deploy-octeto-prod-pipeline.yml
+        file : ./okteto/deploy-octeto-prod-pipeline.yml
         
   update-manifests:
     needs : preview
