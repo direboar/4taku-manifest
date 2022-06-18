@@ -1,23 +1,29 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - deployment-api.yaml
-  - deployment-batch.yaml
+- deployment-api.yaml
+- deployment-batch.yaml
 
 namespace: 4taku-direboar
 
 configMapGenerator:
-- name: database-config
-  literals:
-      - db-server-name=postgres-postgresql-hl.database-direboar
-      - db-server-port=5432
-      - db-name=4taku
-      - db-user-name=4taku-user
+- literals:
+  - db-server-name=postgres-postgresql-hl.database-direboar
+  - db-server-port=5432
+  - db-name=4taku
+  - db-user-name=4taku-user
+  name: database-config
 generatorOptions:
   disableNameSuffixHash: true
 
 secretGenerator:
-  - name : database-secrets
-    literals:
-      - "db-password=4taku-pass"
-#When hash generation is enabled, hash is not set in the config name on the manifest side of the service. To deal with this, disable the generation of hash.
+- literals:
+  - db-password=4taku-pass
+  name: database-secrets
+images:
+- name: minokuba/4taku-api
+  newName: minokuba/4taku-api
+  newTag: b623b420ea1fa1a9040c0653626fff6bc9bace53
+- name: minokuba/4taku-batch
+  newName: minokuba/4taku-batch
+  newTag: b623b420ea1fa1a9040c0653626fff6bc9bace53
