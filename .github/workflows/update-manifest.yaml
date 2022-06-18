@@ -20,7 +20,7 @@ jobs:
       env:
        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        name: pr-${{ github.event.number }}-direboar
+        name: pr-${{ github.event.client_payload.sha }}-direboar
         timeout: 15m 
         filename : ./okteto/deploy-octeto-prod-pipeline.yml
         
