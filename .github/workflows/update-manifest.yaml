@@ -3,9 +3,9 @@ name: update manifest
 on:
   repository_dispatch:
     types: [update-manifest]
-  push:
-    branches:
-      - main
+  # push:
+  #   branches:
+  #     - main
 
 jobs:
   update-manifests:
@@ -28,23 +28,23 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y kubectl
 
-      # # `kustomize edit set image`コマンドで、使用するイメージのタグを更新
-      # # その際に使用するタグは、repository-dispatch経由で受け取ったコミットハッシュを使用
-      # - name: Update image tag
-      #   run: |
-      #     cd base
-      #     /usr/local/bin/kustomize edit set image minokuba/4taku-api=minokuba/4taku-api:${{ github.event.client_payload.sha }}
-      #     /usr/local/bin/kustomize edit set image minokuba/4taku-batch=minokuba/4taku-batch:${{ github.event.client_payload.sha }}
-      #     cd -
+      # `kustomize edit set image`コマンドで、使用するイメージのタグを更新
+      # その際に使用するタグは、repository-dispatch経由で受け取ったコミットハッシュを使用
+      - name: Update image tag
+        run: |
+          cd base
+          /usr/local/bin/kustomize edit set image minokuba/4taku-api=minokuba/4taku-api:${{ github.event.client_payload.sha }}
+          /usr/local/bin/kustomize edit set image minokuba/4taku-batch=minokuba/4taku-batch:${{ github.event.client_payload.sha }}
+          cd -
 
-      # # 使用するイメージのタグを更新のPull Requestの作成
-      # - name: Create Pull Request
-      #   uses: peter-evans/create-pull-request@v3.8.2
-      #   with:
-      #     token: ${{ secrets.REPO_ACCESS_TOKEN }}
-      #     commit-message: "Update manifest"
-      #     title: Update manifest ${{ github.event.client_payload.sha }}
-      #     body: ""
-      #     labels: ""
-      #     branch: update-manifest-${{ github.event.client_payload.sha }}
-      #     base: main
+      # 使用するイメージのタグを更新のPull Requestの作成
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3.8.2
+        with:
+          token: ${{ secrets.REPO_ACCESS_TOKEN }}
+          commit-message: "Update manifest"
+          title: Update manifest ${{ github.event.client_payload.sha }}
+          body: ""
+          labels: ""
+          branch: update-manifest-${{ github.event.client_payload.sha }}
+          base: main
