@@ -25,6 +25,7 @@ jobs:
         filename : ./okteto/deploy-octeto-prod-pipeline.yml
         
   update-manifests:
+    needs : preview
     runs-on: ubuntu-18.04
     timeout-minutes: 300
     env:
