@@ -29,6 +29,7 @@ jobs:
       run: |
         cd base
         /usr/local/bin/kustomize edit set image minokuba/4taku-api=minokuba/4taku-api:${{ github.event.client_payload.sha }}
+        /usr/local/bin/kustomize edit set image minokuba/4taku-batch=minokuba/4taku-batch:${{ github.event.client_payload.sha }}
         cd -
 
     # 使用するイメージのタグを更新のPull Requestの作成
