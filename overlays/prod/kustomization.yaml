@@ -3,7 +3,7 @@ kind: Kustomization
 resources:
   - ../../base
 
-namespace: 4taku-direboar
+# namespace: 4taku-direboar
 
 #Set up replication
 replicas:

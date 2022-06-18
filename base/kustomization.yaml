@@ -4,7 +4,7 @@ resources:
 - deployment-api.yaml
 - deployment-batch.yaml
 
-namespace: 4taku-direboar
+# namespace: 4taku-direboar
 
 configMapGenerator:
 - literals:
