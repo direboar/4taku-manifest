@@ -21,9 +21,12 @@ jobs:
       # kustomizeのインストール
       - name: Install kustomize
         run: |
-          sudo apt-get update && sudo apt-get install -y curl
-          curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash -s ${{ env.KUSTOMIZE_VERSION }}
-      #     sudo mv ./kustomize /usr/local/bin/kustomize
+          sudo apt-get update
+          sudo apt-get install -y apt-transport-https ca-certificates curl
+          sudo curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg
+          echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
+          sudo apt-get update
+          sudo apt-get install -y kubectl
 
       # # `kustomize edit set image`コマンドで、使用するイメージのタグを更新
       # # その際に使用するタグは、repository-dispatch経由で受け取ったコミットハッシュを使用

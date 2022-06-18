@@ -2,12 +2,14 @@
 name: deploy-octeto-prod
 
 on:
-  push:
+#   push:
+#     branches:
+#       - main
+  pull_request:
     branches:
-      - main
-  # pull_request:
-  #   branches:
-  #     - main
+      - master
+    types: [closed]
+
 
 jobs:
   preview:
