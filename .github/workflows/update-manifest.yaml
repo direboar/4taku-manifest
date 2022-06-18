@@ -1,0 +1,44 @@
+name: update manifest
+
+on:
+  repository_dispatch:
+    types: [update-manifest]
+
+jobs:
+  update-manifests:
+
+    runs-on: ubuntu-18.04
+    timeout-minutes: 300
+    env:
+      KUSTOMIZE_VERSION: 4.5.5
+
+    steps:
+    - name: Checkout manifest repository
+      uses: actions/checkout@v2
+    
+    # kustomizeのインストール
+    - name: Install kustomize
+      run: |
+        apt-get update && apt-get install -y curl
+        curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash -s ${{ env.KUSTOMIZE_VERSION }}
+        sudo mv ./kustomize /usr/local/bin/kustomize
+
+    # `kustomize edit set image`コマンドで、使用するイメージのタグを更新
+    # その際に使用するタグは、repository-dispatch経由で受け取ったコミットハッシュを使用
+    - name: Update image tag
+      run: |
+        cd base
+        /usr/local/bin/kustomize edit set image minokuba/4taku-api=minokuba/4taku-api:${{ github.event.client_payload.sha }}
+        cd -
+
+    # 使用するイメージのタグを更新のPull Requestの作成
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v3.8.2
+      with:
+        token: ${{ secrets.REPO_ACCESS_TOKEN }}
+        commit-message: 'Update manifest'
+        title: Update manifest ${{ github.event.client_payload.sha }}
+        body: ""
+        labels: ""
+        branch: update-manifest-${{ github.event.client_payload.sha }}
+        base: main
