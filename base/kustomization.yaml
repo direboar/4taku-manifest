@@ -23,7 +23,7 @@ secretGenerator:
 images:
 - name: minokuba/4taku-api
   newName: minokuba/4taku-api
-  newTag: 2c9b983d9d2faf24d40b444975cc66c9096dafbf
+  newTag: 9e0b7e7075796c594e12ad6cc8e73efe95bd0a79
 - name: minokuba/4taku-batch
   newName: minokuba/4taku-batch
-  newTag: 2c9b983d9d2faf24d40b444975cc66c9096dafbf
+  newTag: 9e0b7e7075796c594e12ad6cc8e73efe95bd0a79
