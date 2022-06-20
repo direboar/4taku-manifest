@@ -10,6 +10,7 @@ jobs:
   deploy-octeto:
     if: github.event.pull_request.merged == true  
     runs-on: ubuntu-latest
+
     steps:
     - name: Context
       uses: okteto/context@latest
@@ -22,7 +23,7 @@ jobs:
         -o kubesec && chmod a+x kubesec && sudo mv kubesec /usr/local/bin/
 
     - name: decrypt 
-      run : |
+      run: |
          cat ./base/database-secrets.yaml | kubesec decrypt -i ./base/database-secrets.yaml -
 
     - name: deploy app by kubectl
@@ -44,4 +45,3 @@ jobs:
     #     skipIfExists: false # これにしておくとmanifestを再読込してくれる
     #     namespace : 4taku-direboar
     #     filename : ./okteto/deploy-octeto-prod-pipeline.yml
-    
