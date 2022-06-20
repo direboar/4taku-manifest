@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: 4taku-api
-  # namespace: 4taku-direboar
 spec:
   strategy:
     type: RollingUpdate

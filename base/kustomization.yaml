@@ -3,8 +3,7 @@ kind: Kustomization
 resources:
 - deployment-api.yaml
 - deployment-batch.yaml
-
-# namespace: 4taku-direboar
+- database-secrets.yaml
 
 configMapGenerator:
 - literals:
@@ -16,10 +15,6 @@ configMapGenerator:
 generatorOptions:
   disableNameSuffixHash: true
 
-secretGenerator:
-- literals:
-  - db-password=4taku-pass
-  name: database-secrets
 images:
 - name: minokuba/4taku-api
   newName: minokuba/4taku-api
