@@ -27,7 +27,7 @@ jobs:
          cat ./base/database-secrets.yaml | kubesec decrypt -i ./base/database-secrets.yaml -
 
     - name: deploy app by kubectl
-    - uses: actions-hub/kubectl@master
+      uses: actions-hub/kubectl@master
       env:
         KUBECONFIG : ${{ secrets.KUBECONFIG  }} 
     # pullrequestブランチの内容をクラスタに反映するので要注意。
