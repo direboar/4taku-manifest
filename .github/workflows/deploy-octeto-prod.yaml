@@ -24,6 +24,7 @@ jobs:
 
     - name: decrypt 
       run: |
+         ls
          cat base/database-secrets.yaml.secrets | kubesec decrypt -i base/database-secrets.yaml -
 
     - name: deploy app by kubectl
