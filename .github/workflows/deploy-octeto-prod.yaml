@@ -1,17 +1,21 @@
 # file: .github/workflows/deploy-octeto-prod.yaml
 name: deploy-octeto-prod
 
+# on:
+#   pull_request:
+#     types:
+#       - closed
+#     branches:    
+#       - 'master'
 on:
-  pull_request:
-    types:
-      - closed
-    branches:    
-      - 'master'
+  push:
+    branches:
+      - main
   workflow_dispatch:
 
 jobs:
   deploy-octeto:
-    if: github.event.pull_request.merged == true  
+    # if: github.event.pull_request.merged == true  
     runs-on: ubuntu-latest
 
     steps:
