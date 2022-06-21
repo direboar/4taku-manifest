@@ -5,6 +5,9 @@ on:
   pull_request:
     types:
       - closed
+    branches:    
+      - 'master'
+  workflow_dispatch:
 
 jobs:
   deploy-octeto:
@@ -12,10 +15,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Context
-      uses: okteto/context@latest
-      with:
-        token: ${{ secrets.OKTETO_TOKEN }}
+    # - name: Context
+    #   uses: okteto/context@latest
+    #   with:
+    #     token: ${{ secrets.OKTETO_TOKEN }}
+    - name: Checkout manifest repository
+      uses: actions/checkout@v2
 
     - name: Set up Kubesec
       run: |
