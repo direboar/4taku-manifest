@@ -40,7 +40,7 @@ jobs:
 
     - name: decrypt 
       run: |
-         kubesec decrypt -i base/database-secrets.yaml.secrets -o base/database-secrets.yaml --debug
+         kubesec decrypt -i base/database-secrets.yaml.secrets -o base/database-secrets.yaml
 
     - name: deploy app by kubectl
       uses: actions-hub/kubectl@master
