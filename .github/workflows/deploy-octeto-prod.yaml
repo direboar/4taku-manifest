@@ -26,13 +26,18 @@ jobs:
     - name: Checkout manifest repository
       uses: actions/checkout@v2
 
-    - name: Import GPG key
-      id: import_gpg
-      uses: crazy-max/ghaction-import-gpg@v5
-      with:
-        gpg_private_key: ${{ secrets.KUBESEC_SECRET_KEY }}
-        passphrase: ${{ secrets.KUBESEC_SECRET_PASSPHRASE }}
-
+#     - name: Import GPG key
+#       id: import_gpg
+#       uses: crazy-max/ghaction-import-gpg@v5
+#       with:
+#         gpg_private_key: ${{ secrets.KUBESEC_SECRET_KEY }}
+#         passphrase: ${{ secrets.KUBESEC_SECRET_PASSPHRASE }}
+    - name: Configure GPG Key
+      run: |
+        echo -n "$GPG_SIGNING_KEY" | base64 --decode | gpg --import
+      env:
+        GPG_SIGNING_KEY: ${{ secrets.KUBESEC_SECRET_KEY }}
+        
     - name: Set up Kubesec
       run: |
         curl -sSL https://github.com/shyiko/kubesec/releases/download/0.9.2/kubesec-0.9.2-linux-amd64 \
