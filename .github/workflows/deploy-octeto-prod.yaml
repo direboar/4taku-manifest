@@ -26,9 +26,10 @@ jobs:
     - name: Checkout manifest repository
       uses: actions/checkout@v2
 
-    - name: Import GPG Key
+    - name: Import GPG key
+      id: import_gpg
       uses: crazy-max/ghaction-import-gpg@v5
-      env:
+      with:
         gpg_private_key: ${{ secrets.KUBESEC_SECRET_KEY }}
         passphrase: ${{ secrets.KUBESEC_SECRET_PASSPHRASE }}
 
