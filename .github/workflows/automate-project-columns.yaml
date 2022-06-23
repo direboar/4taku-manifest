@@ -12,4 +12,4 @@ jobs:
         with:
           project: 4taku
           column: To Do
-          repo-token: ${{ secrets.automate-project-columns_token }}
+          repo-token: ${{ secrets.YONTAKU_REPOSITORY_DISPATCH_TOKEN }}
