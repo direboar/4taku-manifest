@@ -19,54 +19,35 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    # - name: Context
-    #   uses: okteto/context@latest
-    #   with:
-    #     token: ${{ secrets.OKTETO_TOKEN }}
     - name: Checkout manifest repository
       uses: actions/checkout@v2
 
-#     - name: Import GPG key
-#       id: import_gpg
-#       uses: crazy-max/ghaction-import-gpg@v5
-#       with:
-#         gpg_private_key: ${{ secrets.KUBESEC_SECRET_KEY }}
-#         passphrase: ${{ secrets.KUBESEC_SECRET_PASSPHRASE }}
+    # GPGプライベートキーをImportする。
+    # KUBESEC_SECRET_KEYへの設定値は、以下の手順で作成する。
+    # gpg --export-secret-keys xxxxxxxxxxxxxxxxxx | base64 > private.key
+    # (secrets/ecrtypt commandを参照)
     - name: Configure GPG Key
       run: |
         echo -n "$GPG_SIGNING_KEY" | base64 --decode | gpg --import
-        gpg --list-secret-keys --keyid-format=long
+        # gpg --list-secret-keys --keyid-format=long
       env:
         GPG_SIGNING_KEY: ${{ secrets.KUBESEC_SECRET_KEY }}
         
+    # Kubesecをインストールする
     - name: Set up Kubesec
       run: |
         curl -sSL https://github.com/shyiko/kubesec/releases/download/0.9.2/kubesec-0.9.2-linux-amd64 \
         -o kubesec && chmod a+x kubesec && sudo mv kubesec /usr/local/bin/
 
+    # kubesecで複号化する。
     - name: decrypt 
       run: |
-        gpg --list-secret-keys --keyid-format=long
         kubesec decrypt -i base/database-secrets.yaml.secrets -o base/database-secrets.yaml
 
+    # kubectlでデプロイを行う。
     - name: deploy app by kubectl
       uses: actions-hub/kubectl@master
       env:
         KUBE_CONFIG: ${{ secrets.KUBECONFIG  }} 
       with:
         args: apply -k overlays/prod
-    # pullrequestブランチの内容をクラスタに反映するので要注意。
-    # okteto/pipelineはBranchを指定できないので、この挙動を変えるには、
-    # on:
-    #   push:
-    #     branches:
-    #       - main
-    # をトリガーに動かさないとだめそう。
-    # - name: "Trigger the pipeline"
-    #   uses: okteto/pipeline@latest
-    #   with:
-    #     name: pipeline
-    #     timeout: 8m
-    #     skipIfExists: false # これにしておくとmanifestを再読込してくれる
-    #     namespace : 4taku-direboar
-    #     filename : ./okteto/deploy-octeto-prod-pipeline.yml

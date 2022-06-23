@@ -14,3 +14,8 @@
 
 ## 本番環境へのデプロイ(4taku-manifestにて)
 1. deploy-prod.sh
+
+#### Githubへのsecretsの反映 ####
+1.database-secrets.yamlを更新（暗号化部分はBase64に変換する）
+2.kubesec encryptを実行（コマンドはsecrets/encrypt commandを参照。）
+3.git commt/push
