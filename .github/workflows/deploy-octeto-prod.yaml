@@ -52,7 +52,7 @@ jobs:
     - name: deploy app by kubectl
       uses: actions-hub/kubectl@master
       env:
-        KUBECONFIG : ${{ secrets.KUBECONFIG  }} 
+        KUBE_CONFIG : ${{ secrets.KUBECONFIG  }} 
     # pullrequestブランチの内容をクラスタに反映するので要注意。
     # okteto/pipelineはBranchを指定できないので、この挙動を変えるには、
     # on:
