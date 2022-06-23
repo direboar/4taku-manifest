@@ -12,8 +12,4 @@ jobs:
         with:
           project: 4taku
           column: To Do
-<<<<<<< HEAD
-          token: ${{ secrets.YONTAKU_REPOSITORY_DISPATCH_TOKEN }}
-=======
->>>>>>> 3825af03ceab58e44a02bbcb295a787ba2ac4aee
-          repo-token: ${{ secrets.YONTAKU_REPOSITORY_DISPATCH_TOKEN }}
+          repo-token: ${{ secrets.AUTOMATE_PROJECT_COLUMNS_TOKEN }}
