@@ -11,5 +11,5 @@ jobs:
       - uses: alex-page/github-project-automation-plus@v0.8.1
         with:
           project: 4taku
-          column: To Do
+          column: To do
           repo-token: ${{ secrets.AUTOMATE_PROJECT_COLUMNS_TOKEN }}
