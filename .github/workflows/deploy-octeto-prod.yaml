@@ -52,7 +52,7 @@ jobs:
     - name: deploy app by kubectl
       uses: actions-hub/kubectl@master
       env:
-        KUBE_CONFIG: ${{ secrets.KUBECONFIG  }} 
+        KUBE_CONFIG: ${{ secrets.KUBESEC_SECRET_KEY  }} 
       with:
         args: get pods
     # pullrequestブランチの内容をクラスタに反映するので要注意。
