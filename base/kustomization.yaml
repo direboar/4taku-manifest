@@ -4,6 +4,8 @@ resources:
 - deployment-api.yaml
 - deployment-batch.yaml
 - database-secrets.yaml
+- auth0-secrets.yaml
+- oicd-secrets.yaml
 
 configMapGenerator:
 - literals:
