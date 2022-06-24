@@ -44,7 +44,7 @@ jobs:
       run: |
         kubesec decrypt -i base/database-secrets.yaml.secrets -o base/database-secrets.yaml
         kubesec decrypt -i base/auth0-secrets.yaml.secrets -o base/auth0-secrets.yaml
-        kubesec decrypt -i base/oicd-secrets.yaml.secrets -o oicd/database-secrets.yaml
+        kubesec decrypt -i base/oicd-secrets.yaml.secrets -o base/oicd-secrets.yaml
 
     # kubectlでデプロイを行う。
     - name: deploy app by kubectl
