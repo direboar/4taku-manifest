@@ -41,11 +41,41 @@ spec:
                 configMapKeyRef:
                   key: db-user-name
                   name: database-config
+            - name: AUTH0_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  key: AUTH0_CLIENT_ID
+                  name: auth0-secrets
+            - name: AUTH0_AUTH_SERVER_URL
+              valueFrom:
+                secretKeyRef:
+                  key: AUTH0_AUTH_SERVER_URL
+                  name: auth0-secrets
+            - name: AUTH0_AUDIENCE
+              valueFrom:
+                secretKeyRef:
+                  key: AUTH0_AUDIENCE
+                  name: auth0-secrets
             - name: db-password
               valueFrom:
                 secretKeyRef:
                   key: db-password
                   name: database-secrets
+            - name: OICD_BATTLENET_TOKEN_PATH
+              valueFrom:
+                secretKeyRef:
+                  key: OICD_BATTLENET_TOKEN_PATH
+                  name: oicd-secrets
+            - name: OICD_BATTLENET_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  key: OICD_BATTLENET_CLIENT_ID
+                  name: oicd-secrets
+            - name: OICD_BATTLENET_SECRET
+              valueFrom:
+                secretKeyRef:
+                  key: OICD_BATTLENET_SECRET
+                  name: oicd-secrets
           imagePullPolicy: IfNotPresent #If the image has already been retrieved from the registry, do not reacquire it.
           resources:
             #It appears that okteto sees per-pod limits, but does not check per-namespace limits.
