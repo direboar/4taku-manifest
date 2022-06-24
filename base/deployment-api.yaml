@@ -56,10 +56,10 @@ spec:
                 secretKeyRef:
                   key: AUTH0_AUTH_SERVER_URL
                   name: auth0-secrets
-            - name: AUTH0_CLAUTH0_AUDIENCEIENT_ID
+            - name: AUTH0_AUDIENCE
               valueFrom:
                 secretKeyRef:
-                  key: AUTH0_CLAUTH0_AUDIENCEIENT_ID
+                  key: AUTH0_AUDIENCE
                   name: auth0-secrets
             - name: OICD_BATTLENET_TOKEN_PATH
               valueFrom:
