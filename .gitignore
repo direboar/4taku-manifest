@@ -1,2 +1,2 @@
 secrets/*
-base/database-secrets.yaml
+base/*-secrets.yaml
