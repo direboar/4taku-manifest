@@ -41,6 +41,11 @@ spec:
                 configMapKeyRef:
                   key: db-user-name
                   name: database-config
+            - name: db-password
+              valueFrom:
+                secretKeyRef:
+                  key: db-password
+                  name: database-secrets
             - name: AUTH0_CLIENT_ID
               valueFrom:
                 secretKeyRef:
@@ -51,16 +56,11 @@ spec:
                 secretKeyRef:
                   key: AUTH0_AUTH_SERVER_URL
                   name: auth0-secrets
-            - name: AUTH0_AUDIENCE
+            - name: AUTH0_CLAUTH0_AUDIENCEIENT_ID
               valueFrom:
                 secretKeyRef:
-                  key: AUTH0_AUDIENCE
+                  key: AUTH0_CLAUTH0_AUDIENCEIENT_ID
                   name: auth0-secrets
-            - name: db-password
-              valueFrom:
-                secretKeyRef:
-                  key: db-password
-                  name: database-secrets
             - name: OICD_BATTLENET_TOKEN_PATH
               valueFrom:
                 secretKeyRef:
