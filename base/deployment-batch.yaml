@@ -92,6 +92,21 @@ spec:
                     secretKeyRef:
                       key: db-password
                       name: database-secrets
+                - name: OICD_BATTLENET_TOKEN_PATH
+                  valueFrom:
+                    secretKeyRef:
+                      key: OICD_BATTLENET_TOKEN_PATH
+                      name: oicd-secrets
+                - name: OICD_BATTLENET_CLIENT_ID
+                  valueFrom:
+                    secretKeyRef:
+                      key: OICD_BATTLENET_CLIENT_ID
+                      name: oicd-secrets
+                - name: OICD_BATTLENET_SECRET
+                  valueFrom:
+                    secretKeyRef:
+                      key: OICD_BATTLENET_SECRET
+                      name: oicd-secrets
               resources:
                 #It appears that okteto sees per-pod limits, but does not check per-namespace limits.
                 requests:
