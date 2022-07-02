@@ -116,3 +116,53 @@ spec:
                   memory: 2000Mi
                   cpu: 1000m
           restartPolicy: OnFailure
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: 4taku-batch.migrate-flyway
+spec:
+  template:
+    spec:
+      containers:
+        - name: 4taku-batch-migrate-flyway
+          image: minokuba/4taku-batch
+          imagePullPolicy: IfNotPresent #If the image has already been retrieved from the registry, do not reacquire it.
+          args:
+            - "migrate-flyway"
+            # - "-cl"
+          env:
+            - name: db-server-name
+              valueFrom:
+                configMapKeyRef:
+                  key: db-server-name
+                  name: database-config
+            - name: db-server-port
+              valueFrom:
+                configMapKeyRef:
+                  key: db-server-port
+                  name: database-config
+            - name: db-name
+              valueFrom:
+                configMapKeyRef:
+                  key: db-name
+                  name: database-config
+            - name: db-username
+              valueFrom:
+                configMapKeyRef:
+                  key: db-user-name
+                  name: database-config
+            - name: db-password
+              valueFrom:
+                secretKeyRef:
+                  key: db-password
+                  name: database-secrets
+          resources:
+            #It appears that okteto sees per-pod limits, but does not check per-namespace limits.
+            requests:
+              memory: 2000Mi
+              cpu: 1000m
+            limits:
+              memory: 2000Mi
+              cpu: 1000m
+      restartPolicy: OnFailure

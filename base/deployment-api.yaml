@@ -61,21 +61,6 @@ spec:
                 secretKeyRef:
                   key: AUTH0_AUDIENCE
                   name: auth0-secrets
-            - name: OICD_BATTLENET_TOKEN_PATH
-              valueFrom:
-                secretKeyRef:
-                  key: OICD_BATTLENET_TOKEN_PATH
-                  name: oicd-secrets
-            - name: OICD_BATTLENET_CLIENT_ID
-              valueFrom:
-                secretKeyRef:
-                  key: OICD_BATTLENET_CLIENT_ID
-                  name: oicd-secrets
-            - name: OICD_BATTLENET_SECRET
-              valueFrom:
-                secretKeyRef:
-                  key: OICD_BATTLENET_SECRET
-                  name: oicd-secrets
           imagePullPolicy: IfNotPresent #If the image has already been retrieved from the registry, do not reacquire it.
           resources:
             #It appears that okteto sees per-pod limits, but does not check per-namespace limits.

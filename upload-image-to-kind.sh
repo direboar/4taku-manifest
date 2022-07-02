@@ -1,2 +1,2 @@
-kind load docker-image minokuba/4taku-api
-kind load docker-image minokuba/4taku-batch
+kind load docker-image minokuba/4taku-api:develop
+kind load docker-image minokuba/4taku-batch:develop

@@ -47,6 +47,12 @@ jobs:
         kubesec decrypt -i base/oicd-secrets.yaml.secrets -o base/oicd-secrets.yaml
 
     # kubectlでデプロイを行う。
+    - name: delete migrate-flyway batch.
+      uses: actions-hub/kubectl@master
+      env:
+        KUBE_CONFIG: ${{ secrets.KUBECONFIG  }} 
+      with:
+        args: delete jobs.batch 4taku-batch.migrate-flyway
     - name: deploy app by kubectl
       uses: actions-hub/kubectl@master
       env:
