@@ -1,5 +1,4 @@
-
 #/bin/bash
 kubectl ctx kind-kind
-sudo cat ./base/database-secrets.yaml.secrets | sudo kubesec decrypt -i - > ./base/database-secrets.yaml
+kubectl delete jobs.batch 4taku-batch.migrate-flyway
 ./kustomize build overlays/dev | kubectl apply -f -

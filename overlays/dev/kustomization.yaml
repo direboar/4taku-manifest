@@ -38,3 +38,16 @@ patchesJson6902:
       version: v1
       kind: CronJob
       name: 4taku-batch.update-hero
+  - path: ./patch-database-secrets.yaml
+    target:
+      version: v1
+      kind: Secret
+      name: database-secrets  
+
+images:
+- name: minokuba/4taku-api
+  newName: minokuba/4taku-api
+  newTag: develop
+- name: minokuba/4taku-batch
+  newName: minokuba/4taku-batch
+  newTag: develop1
