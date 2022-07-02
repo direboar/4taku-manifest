@@ -13,7 +13,8 @@ jobs:
       - name: Checkout manifest repository
         uses: actions/checkout@v2
         with : 
-          ref: production
+          ref: master
+          # ref: production
 
       # kustomizeのインストール
       - name: Install kustomize
