@@ -59,4 +59,4 @@ jobs:
       env:
         KUBE_CONFIG: ${{ secrets.KUBECONFIG  }} 
       with:
-        args: apply -k overlays/prod --namespace=direboar
+        args: apply -k overlays/prod
