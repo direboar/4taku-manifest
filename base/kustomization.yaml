@@ -20,7 +20,7 @@ generatorOptions:
 images:
 - name: minokuba/4taku-api
   newName: minokuba/4taku-api
-  newTag: e22294273f317a20d8d2a8e5acb7345a80822fe4
+  newTag: 1d640a63921eb6df0acf3948c1d7ae8c339907c5
 - name: minokuba/4taku-batch
   newName: minokuba/4taku-batch
-  newTag: e22294273f317a20d8d2a8e5acb7345a80822fe4
+  newTag: 1d640a63921eb6df0acf3948c1d7ae8c339907c5
