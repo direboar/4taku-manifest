@@ -1,0 +1,57 @@
+# file: .github/workflows/deploy-octeto-prod.yaml
+name: deploy-octeto-prod
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+  schedule:
+    - cron:  '0 3,15 * * *'
+
+jobs:
+  deploy-octeto:
+    # if: github.event.pull_request.merged == true  
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout manifest repository
+      uses: actions/checkout@v2
+
+    # GPGプライベートキーをImportする。
+    # KUBESEC_SECRET_KEYへの設定値は、以下の手順で作成する。
+    # gpg --export-secret-keys xxxxxxxxxxxxxxxxxx | base64 > private.key
+    # (secrets/ecrtypt commandを参照)
+    - name: Configure GPG Key
+      run: |
+        echo -n "$GPG_SIGNING_KEY" | base64 --decode | gpg --import
+        # gpg --list-secret-keys --keyid-format=long
+      env:
+        GPG_SIGNING_KEY: ${{ secrets.KUBESEC_SECRET_KEY }}
+        
+    # Kubesecをインストールする
+    - name: Set up Kubesec
+      run: |
+        curl -sSL https://github.com/shyiko/kubesec/releases/download/0.9.2/kubesec-0.9.2-linux-amd64 \
+        -o kubesec && chmod a+x kubesec && sudo mv kubesec /usr/local/bin/
+
+    # kubesecで複号化する。
+    - name: decrypt 
+      run: |
+        kubesec decrypt -i base/database-secrets.yaml.secrets -o base/database-secrets.yaml
+        kubesec decrypt -i base/auth0-secrets.yaml.secrets -o base/auth0-secrets.yaml
+        kubesec decrypt -i base/oicd-secrets.yaml.secrets -o base/oicd-secrets.yaml
+
+    # kubectlでデプロイを行う。
+    # - name: delete migrate-flyway batch.
+    #   uses: actions-hub/kubectl@master
+    #   env:
+    #     KUBE_CONFIG: ${{ secrets.KUBECONFIG  }} 
+    #   with:
+    #     args: delete jobs.batch 4taku-batch.migrate-flyway
+    - name: deploy app by kubectl
+      uses: actions-hub/kubectl@master
+      env:
+        KUBE_CONFIG: ${{ secrets.KUBECONFIG  }} 
+      with:
+        args: apply -k overlays/staging
