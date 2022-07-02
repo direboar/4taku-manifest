@@ -1,5 +1,5 @@
 # file: .github/workflows/deploy-octeto-prod.yaml
-name: deploy-octeto-prod
+name: deploy octeto staging
 
 on:
   push:
