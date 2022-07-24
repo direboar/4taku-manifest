@@ -13,8 +13,7 @@ jobs:
       - name: Checkout manifest repository
         uses: actions/checkout@v2
         with : 
-          ref: main
-          # ref: production
+          ref: production
 
       # kustomizeのインストール
       - name: Install kustomize
@@ -42,6 +41,6 @@ jobs:
           commit-message: "Update manifest"
           title: Update manifest ${{ github.event.client_payload.sha }}
           body: ""
-          labels: ""
+          labels: release
           branch: update-manifest-${{ github.event.client_payload.sha }}
           base: production
