@@ -32,17 +32,31 @@ jobs:
       - name: Update image tag
         run: |
           cd base
-          /usr/local/bin/kustomize edit set image minokuba/4taku-api=minokuba/4taku-api:${{ github.event.client_payload.sha }}
-          /usr/local/bin/kustomize edit set image minokuba/4taku-batch=minokuba/4taku-batch:${{ github.event.client_payload.sha }}
+          /usr/local/bin/kustomize edit set image minokuba/4taku-api=minokuba/4taku-api:xxx
+          /usr/local/bin/kustomize edit set image minokuba/4taku-batch=minokuba/4taku-batch:xx
           cd -
 
       # 使用するイメージのタグを更新し、Pull Requestの作成
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v3.8.2
+        uses: repo-sync/pull-request@v2
         with:
-          commit-message: "Update manifest"
-          title: Update manifest ${{ github.event.client_payload.sha }}
-          body: ""
-          labels: ""
-          branch: update-manifest-${{ github.event.client_payload.sha }}
-          base: production
+          source_branch: "main"                                 # If blank, default: triggered branch
+          destination_branch: "production"                      # If blank, default: master
+          pr_title: "Update manifest xx" # Title of pull request
+          pr_body: ":xxx"              # Full markdown support, requires pr_title to be set
+          # pr_template: ".github/PULL_REQUEST_TEMPLATE.md"   # Path to pull request template, requires pr_title to be set, excludes pr_body
+          # pr_reviewer: "wei,worker"                         # Comma-separated list (no spaces)
+          # pr_assignee: "wei,worker"                         # Comma-separated list (no spaces)
+          # pr_label: "auto-pr"                               # Comma-separated list (no spaces)
+          # pr_milestone: "Milestone 1"                       # Milestone name
+          pr_draft: true                                    # Creates pull request as draft
+          # pr_allow_empty: true                              # Creates pull request even if there are no changes
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+        #         uses: peter-evans/create-pull-request@v3.8.2
+        # with:
+        #   commit-message: "Update manifest"
+        #   title: Update manifest ${{ github.event.client_payload.sha }}
+        #   body: ""
+        #   labels: ""
+        #   branch: update-manifest-${{ github.event.client_payload.sha }}
+        #   base: production
