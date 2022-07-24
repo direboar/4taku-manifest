@@ -44,3 +44,4 @@ jobs:
           labels: release
           branch: update-manifest-${{ github.event.client_payload.sha }}
           base: production
+          delete-branch: true
