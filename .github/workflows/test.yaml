@@ -70,6 +70,6 @@ jobs:
           commit-message: "Update manifest"
           title: Update manifest ${{ github.event.client_payload.sha }}
           body: ""
-          labels: ""
+          labels: "release"
           branch: update-manifest-${{ github.event.client_payload.sha }}
           base: production
