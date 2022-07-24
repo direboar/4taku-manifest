@@ -17,6 +17,17 @@ jobs:
           ref: main
           # ref: production
 
+      - name: Read file
+        uses: juliangruber/read-file-action@v1
+        with:
+          path: ./base/deployment-batch.yaml
+      - name: Echo file
+        run: echo "${{ steps.package.outputs.content }}"
+      - name: If file contains
+        if: contains(steps.package.outputs.content, 'stop!')
+        run: |
+          exit 1
+
       # kustomizeのインストール
       - name: Install kustomize
         run: |
