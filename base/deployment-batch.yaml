@@ -130,7 +130,7 @@ spec:
           imagePullPolicy: IfNotPresent #If the image has already been retrieved from the registry, do not reacquire it.
           args:
             - "migrate-flyway"
-            - "-cl"
+#             - "-cl"
           env:
             - name: db-server-name
               valueFrom:
