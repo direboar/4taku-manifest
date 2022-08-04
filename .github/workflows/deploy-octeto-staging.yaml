@@ -59,3 +59,14 @@ jobs:
         KUBE_CONFIG: ${{ secrets.KUBECONFIG  }} 
       with:
         args: apply -k overlays/staging
+    - name: Discord Message Notify
+      uses: appleboy/discord-action@0.0.3
+      with:
+        webhook_id: ${{ secrets.DISCORD_WEBHOOK_ID }}
+        webhook_token: ${{ secrets.DISCORD_WEBHOOK_TOKEN }}
+        color: "#48f442"
+        username: "GitHub Bot[4taku-manifest]"
+        args: |
+              APIをStaging環境にDeployしました。
+              WebURL : https://direboar.github.io/4taku-site-staging/
+              トリガーイベント:${{ github.event_name }} 

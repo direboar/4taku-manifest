@@ -38,10 +38,22 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3.8.2
         with:
-          commit-message: "Update manifest"
-          title: Update manifest ${{ github.event.client_payload.sha }}
+          commit-message: "APIをProduction環境にDeployするためのPullRequestを作成します。"
+          title: APIをProduction環境にDeployします。commithash=${{ github.event.client_payload.sha }}
           body: ""
           labels: release
           branch: update-manifest-${{ github.event.client_payload.sha }}
           base: production
           delete-branch: true
+
+      - name: Discord Message Notify
+        uses: appleboy/discord-action@0.0.3
+        with:
+          webhook_id: ${{ secrets.DISCORD_WEBHOOK_ID }}
+          webhook_token: ${{ secrets.DISCORD_WEBHOOK_TOKEN }}
+          color: "#48f442"
+          username: "GitHub Bot[4taku-manifest]"
+          args: |
+                APIをProduction環境にDeployするためのPullRequestが作成されました。
+                https://github.com/direboar/4taku-manifest/pulls/${{ steps.cpr.outputs.pull-request-number }}
+                トリガーイベント:${{ github.event_name }} 
