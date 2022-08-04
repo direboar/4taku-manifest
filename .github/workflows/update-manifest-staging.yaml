@@ -38,7 +38,7 @@ jobs:
         uses: peter-evans/create-pull-request@v3.8.2
         with:
           commit-message: "APIをStaging環境にDeployするためのPullRequestを作成します。"
-          title: APIをStaging環境にDeployします。 ${{ github.event.client_payload.sha }}
+          title: APIをStaging環境にDeployします。commithash=${{ github.event.client_payload.sha }}
           body: ""
           labels: release
           branch: deploy-api-to-staging-${{ github.event.client_payload.sha }}
